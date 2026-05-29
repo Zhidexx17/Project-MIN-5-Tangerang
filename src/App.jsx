@@ -554,10 +554,17 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
   </div>
 );
 
-// --- VIEW 3: DOKUMEN (IFRAME ONEDRIVE) ---
+// --- VIEW 3: DOKUMEN (REDIRECT ONEDRIVE) ---
 const DocumentView = ({ docId, setCurrentPage }) => {
   const currentDoc =
     DOCUMENTS_V2.find((d) => d.id === parseInt(docId)) || DOCUMENTS_V2[0];
+  const hasDocumentLink = Boolean(currentDoc.embedUrl);
+
+  const handleOpenDocument = () => {
+    if (!hasDocumentLink) return;
+
+    window.open(currentDoc.embedUrl, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <div className="bg-[#F4F6F9] min-h-[calc(100vh-64px)] pb-16">
@@ -613,32 +620,30 @@ const DocumentView = ({ docId, setCurrentPage }) => {
               </div>
             </div>
 
-            {/* Iframe OneDrive Container */}
-            <div className="bg-white border border-[#E2E8F0] rounded-xl h-[600px] overflow-hidden shadow-sm flex flex-col relative group">
-              {currentDoc.embedUrl ? (
-                <iframe
-                  src={currentDoc.embedUrl}
-                  width="100%"
-                  height="100%"
-                  className="border-0 flex-grow"
-                  title={`Tautan Folder - ${currentDoc.title}`}
-                  allowFullScreen
-                />
-              ) : (
-                <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-gray-50 border-2 border-dashed border-gray-200 m-4 rounded-xl">
-                  <FolderOpen
-                    className="w-16 h-16 text-gray-300 mb-4"
-                    strokeWidth={1.5}
-                  />
-                  <h3 className="text-lg font-bold text-[#1E293B] mb-2">
-                    Tautan Belum Dikonfigurasi
-                  </h3>
-                  <p className="text-sm text-[#64748B] max-w-md">
-                    Tautan integrasi folder OneDrive untuk dokumen ini belum
-                    disematkan pada data aplikasi.
-                  </p>
+            {/* Dokument Info Card */}
+            <div className="bg-white border border-[#E2E8F0] rounded-2xl shadow-[0_10px_30px_rgba(15,23,42,0.06)] p-6 sm:p-10 min-h-[420px] flex items-center justify-center">
+              <div className="max-w-2xl w-full text-center rounded-2xl border border-dashed border-[#E2E8F0] bg-[#F9FBFD] px-6 py-10 sm:px-10 sm:py-14">
+                <div className="flex items-center justify-center w-20 h-20 mx-auto rounded-full bg-[#FFF7E6] mb-5">
+                  <FolderOpen className="w-10 h-10 text-[#C8961E]" strokeWidth={1.8} />
                 </div>
-              )}
+                <h3 className="text-xl sm:text-2xl font-bold text-[#1E293B] mb-3 leading-tight">
+                  Dokumen tersedia di Cloud Penyimpanan OneDrive Resmi.
+                </h3>
+                <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-xl mx-auto">
+                  Silakan klik tombol di bawah untuk memeriksa, membaca, dan mengunduh seluruh bukti fisik secara transparan.
+                </p>
+
+                <button
+                  onClick={handleOpenDocument}
+                  disabled={!hasDocumentLink}
+                  className={`mt-6 inline-flex items-center gap-2 mx-auto ${hasDocumentLink ? "bg-[#1A4731] hover:bg-[#1E6B45] text-white font-bold px-8 py-4 rounded-xl shadow-lg transition-all" : "bg-gray-300 text-gray-600 font-bold px-8 py-4 rounded-xl cursor-not-allowed"}`}
+                >
+                  <FolderOpen className="w-5 h-5" />
+                  {hasDocumentLink
+                    ? "Buka Dokumen di Tab Baru"
+                    : "Tautan dokumen belum dikonfigurasi"}
+                </button>
+              </div>
             </div>
           </div>
 
