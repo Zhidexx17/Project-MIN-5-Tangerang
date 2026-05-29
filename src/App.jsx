@@ -20,13 +20,15 @@ const DOCUMENTS_V2 = [
     id: 1,
     title: "Usaha Pengembangan Madrasah",
     desc: "Buku kerja dan bukti fisik perencanaan, pelaksanaan, serta evaluasi program pengembangan madrasah secara berkelanjutan.",
-    embedUrl: "",
+    embedUrl:
+      "https://1drv.ms/f/c/c2186077387f815b/IgAey93x5NuFR7dJCgTE5osFAXGWxVNr8AyDBgnehm-MJMs?e=sjtjKw",
   },
   {
     id: 2,
     title: "Pelaksanaan Tugas Manajerial",
     desc: "Dokumen terkait manajemen standar nasional pendidikan, kelembagaan, dan pengelolaan sumber daya administrasi.",
-    embedUrl: "",
+    embedUrl:
+      "https://1drv.ms/f/c/c2186077387f815b/IgAW13NePHeGT5WX17-6PAAuAem4a4juEsOamlqrzcEPG98?e=mlWV6c",
   },
   {
     id: 3,
