@@ -1,92 +1,94 @@
 import React, { useState } from "react";
 import {
   FolderOpen,
-  Search,
   Menu,
   X,
   ChevronDown,
   ChevronRight,
-  FileText,
   MapPin,
   Phone,
   Mail,
   Globe,
-  UploadCloud,
-  FileIcon,
-  ImageIcon,
-  Download,
-  Plus,
-  Share2,
-  Globe2,
-  Play,
+  Target,
+  BookOpen,
+  Award,
 } from "lucide-react";
-// --- MOCK DATA V2 ---
+
+// Local brand icons (lucide-react in this project doesn't include brand icons)
+const Facebook = ({ className = "w-5 h-5", ...props }) => (
+  <svg
+    viewBox="0 0 24 24"
+    className={className}
+    fill="currentColor"
+    aria-hidden="true"
+    {...props}
+  >
+    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.437 9.878v-6.99H8.898v-2.888h1.539V9.412c0-1.523.903-2.362 2.285-2.362.663 0 1.357.118 1.357.118v1.494h-.765c-.754 0-.99.47-.99.953v1.145h1.687l-.27 2.888h-1.417v6.99C18.343 21.128 22 16.991 22 12z" />
+  </svg>
+);
+
+const Instagram = ({ className = "w-5 h-5", ...props }) => (
+  <svg
+    viewBox="0 0 24 24"
+    className={className}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    {...props}
+  >
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+    <line x1="17.5" y1="6.5" x2="17.5" y2="6.5" />
+  </svg>
+);
+
+const Youtube = ({ className = "w-5 h-5", ...props }) => (
+  <svg
+    viewBox="0 0 24 24"
+    className={className}
+    fill="currentColor"
+    aria-hidden="true"
+    {...props}
+  >
+    <path d="M23.5 6.2a3 3 0 00-2.1-2.12C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.4.58A3 3 0 00.5 6.2 31.6 31.6 0 000 12a31.6 31.6 0 00.5 5.8 3 3 0 002.1 2.12C4.3 20.5 12 20.5 12 20.5s7.7 0 9.4-.58a3 3 0 002.1-2.12A31.6 31.6 0 0024 12a31.6 31.6 0 00-.5-5.8zM10 15.5v-7l6 3.5-6 3.5z" />
+  </svg>
+);
+
+// --- MOCK DATA V2 (REFACTORED) ---
 const DOCUMENTS_V2 = [
   {
     id: 1,
     title: "Usaha Pengembangan Madrasah",
-    subheadings: [
-      {
-        id: "1.1",
-        title: "Mengembangkan madrasah sesuai kebutuhan",
-        files: [
-          {
-            id: 101,
-            name: "rencana-kerja-madrasah-2024.pdf",
-            type: "PDF",
-            size: "2.4 MB",
-            date: "10 Des 2024",
-          },
-          {
-            id: 102,
-            name: "foto-rapat-pengembangan.jpg",
-            type: "IMG",
-            size: "1.1 MB",
-            date: "11 Des 2024",
-          },
-          {
-            id: 103,
-            name: "sk-tim-pengembangan-madrasah.pdf",
-            type: "PDF",
-            size: "800 KB",
-            date: "12 Des 2024",
-          },
-        ],
-      },
-      {
-        id: "1.2",
-        title: "Mengelola perubahan dan pengembangan madrasah",
-        files: [
-          {
-            id: 104,
-            name: "laporan-perubahan-kurikulum.docx",
-            type: "DOCX",
-            size: "1.5 MB",
-            date: "15 Des 2024",
-          },
-        ],
-      },
-      {
-        id: "1.3",
-        title: "Mengelola hubungan antara madrasah and masyarakat",
-        files: [],
-      },
-      { id: "1.4", title: "Mengelola proses pencapaian 8 SNP", files: [] },
-      { id: "1.5", title: "Mengelola unit layanan khusus madrasah", files: [] },
-      { id: "1.6", title: "Mengelola sistem informasi madrasah", files: [] },
-    ],
+    desc: "Buku kerja dan bukti fisik perencanaan, pelaksanaan, serta evaluasi program pengembangan madrasah secara berkelanjutan.",
+    embedUrl: "",
   },
   {
     id: 2,
     title: "Pelaksanaan Tugas Manajerial",
-    subheadings: [
-      { id: "2.1", title: "Menyusun perencanaan madrasah", files: [] },
-      { id: "2.2", title: "Mengelola standar nasional pendidikan", files: [] },
-    ],
+    desc: "Dokumen terkait manajemen standar nasional pendidikan, kelembagaan, dan pengelolaan sumber daya administrasi.",
+    embedUrl: "",
   },
-  { id: 3, title: "Pengembangan Kewirausahaan", subheadings: [] },
-  { id: 4, title: "Supervisi Guru & Tenaga Kependidikan", subheadings: [] },
-  { id: 5, title: "Hasil Kinerja Kepala Madrasah", subheadings: [] },
+  {
+    id: 3,
+    title: "Pengembangan Kewirausahaan",
+    desc: "Inovasi, kerja keras, dan pantang menyerah dalam menciptakan peluang serta mengembangkan madrasah.",
+    embedUrl: "",
+  },
+  {
+    id: 4,
+    title: "Supervisi Guru & Tenaga Kependidikan",
+    desc: "Program, instrumen, pelaksanaan, dan tindak lanjut supervisi akademik terhadap pendidik dan tenaga kependidikan.",
+    embedUrl: "",
+  },
+  {
+    id: 5,
+    title: "Hasil Kinerja Kepala Madrasah",
+    desc: "Prestasi dan capaian hasil kerja dari kepala madrasah yang telah diraih selama masa tugas.",
+    embedUrl: "",
+  },
 ];
 
 // --- STYLES CONFIG ---
@@ -101,6 +103,7 @@ const colors = {
   border: "#E2E8F0",
 };
 
+// --- KOMPONEN LOGO KEMENAG KUSTOM (MIN LEGOK KAB. TANGERANG) ---
 const KemenagLogo = ({
   className = "w-28 h-28",
   showText = true,
@@ -108,22 +111,26 @@ const KemenagLogo = ({
 }) => {
   const svgContent = (
     <svg viewBox="0 0 100 100" className={className}>
+      {/* Pentagon Luar */}
       <polygon
         points="50,3 95,36 78,88 22,88 5,36"
         fill="#1A4731"
         stroke="#C8961E"
         strokeWidth="3"
       />
+      {/* Pentagon Dalam */}
       <polygon
         points="50,8 90,38 75,83 25,83 10,38"
         fill="#1E6B45"
         stroke="#C8961E"
         strokeWidth="1"
       />
+      {/* Bintang */}
       <polygon
         points="50,15 53,23 62,23 55,28 57,36 50,31 43,36 45,28 38,23 47,23"
         fill="#FFD700"
       />
+      {/* Kapas */}
       <path
         d="M 28,60 C 24,52 28,40 36,32"
         fill="none"
@@ -132,6 +139,7 @@ const KemenagLogo = ({
         strokeLinecap="round"
         strokeDasharray="1 4"
       />
+      {/* Padi */}
       <path
         d="M 72,60 C 76,52 72,40 64,32"
         fill="none"
@@ -139,6 +147,7 @@ const KemenagLogo = ({
         strokeWidth="2.5"
         strokeLinecap="round"
       />
+      {/* Al-Qur'an Terbuka */}
       <path
         d="M 36,54 C 42,48 48,54 50,56 C 52,54 58,48 64,54 L 64,44 C 58,38 52,44 50,46 C 48,44 42,38 36,44 Z"
         fill="#FFFBEB"
@@ -146,12 +155,14 @@ const KemenagLogo = ({
         strokeWidth="1"
       />
       <path d="M 50,46 L 50,56" stroke="#C8961E" strokeWidth="1" />
+      {/* Rehal */}
       <path
         d="M 42,56 L 58,66 M 58,56 L 42,66"
         stroke="#FFFFFF"
         strokeWidth="2.5"
         strokeLinecap="round"
       />
+      {/* Pita */}
       <path
         d="M 20,73 Q 50,81 80,73 L 75,80 Q 50,87 25,80 Z"
         fill="#FFFFFF"
@@ -191,6 +202,8 @@ const KemenagLogo = ({
   );
 };
 
+// --- COMPONENTS ---
+
 const Navbar = ({ currentPage, setCurrentPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -199,6 +212,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
+          {/* Logo & Brand */}
           <div
             className="flex items-center cursor-pointer"
             onClick={() => setCurrentPage("home")}
@@ -217,6 +231,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
             </div>
           </div>
 
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => setCurrentPage("home")}
@@ -262,11 +277,15 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
               )}
             </div>
 
-            <button className="font-medium text-[#64748B] hover:text-[#1A4731] h-full transition-colors">
+            <button
+              onClick={() => setCurrentPage("about")}
+              className={`font-medium ${currentPage === "about" ? "text-[#1A4731] border-b-2 border-[#1A4731]" : "text-[#64748B] hover:text-[#1A4731]"} h-full transition-colors`}
+            >
               Tentang
             </button>
           </div>
 
+          {/* Mobile Menu Btn */}
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -282,6 +301,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
         </div>
       </div>
 
+      {/* Mobile Nav Drawer */}
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 p-4 space-y-4 shadow-lg absolute w-full left-0 z-50">
           <button
@@ -301,7 +321,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
               }}
               className="block w-full text-left font-semibold text-[#1A4731] py-1.5"
             >
-              Semua Kategori Dokumen
+              Semua Dokumen
             </button>
             {DOCUMENTS_V2.map((doc) => (
               <button
@@ -317,7 +337,13 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
               </button>
             ))}
           </div>
-          <button className="block w-full text-left font-medium text-[#64748B] py-2">
+          <button
+            onClick={() => {
+              setCurrentPage("about");
+              setIsMenuOpen(false);
+            }}
+            className="block w-full text-left font-medium text-[#64748B] py-2"
+          >
             Tentang
           </button>
         </div>
@@ -330,6 +356,7 @@ const Footer = () => (
   <footer className="bg-white pt-12 border-t border-[#E2E8F0]">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Col 1 */}
         <div>
           <div className="flex items-center mb-4">
             <div className="w-8 h-8 mr-3 shrink-0 flex items-center justify-center">
@@ -345,26 +372,43 @@ const Footer = () => (
           </p>
         </div>
 
+        {/* Col 2 */}
         <div>
           <h3 className="font-bold text-[#1E293B] mb-4 text-base">
-            Dokumen PKKM
+            Sosial Media
           </h3>
-          <ul className="space-y-2 text-[#64748B] text-sm">
-            {DOCUMENTS_V2.slice(0, 4).map((doc) => (
-              <li key={doc.id}>
-                <button className="hover:text-[#1A4731] transition-colors">
-                  Dokumen {doc.id} — {doc.title}
-                </button>
-              </li>
-            ))}
+          <ul className="space-y-3 text-[#64748B] text-sm">
             <li>
-              <button className="hover:text-[#1A4731] transition-colors">
-                Dokumen 5 — Hasil Kinerja...
-              </button>
+              <a
+                href="#"
+                className="flex items-center hover:text-[#1A4731] transition-colors group"
+              >
+                <Facebook className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
+                <span>MIN 5 Tangerang</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="flex items-center hover:text-[#1A4731] transition-colors group"
+              >
+                <Instagram className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
+                <span>@min5tangerang</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="flex items-center hover:text-[#1A4731] transition-colors group"
+              >
+                <Youtube className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
+                <span>MIN 5 TV</span>
+              </a>
             </li>
           </ul>
         </div>
 
+        {/* Col 3 */}
         <div>
           <h3 className="font-bold text-[#1E293B] mb-4 text-base">
             Hubungi Kami
@@ -392,11 +436,12 @@ const Footer = () => (
     </div>
 
     <div className="bg-[#1A4731] py-4 text-center text-xs text-white/70">
-      © 2025 MIN 5 TANGERANG — Kementerian Agama Tangerang
+      © 2026 MIN 5 TANGERANG — Kementerian Agama Tangerang
     </div>
   </footer>
 );
 
+// --- VIEW 1: LANDING PAGE (HERO ONLY) ---
 const HomeView = ({ setCurrentPage }) => (
   <div className="animate-in fade-in duration-500 bg-[#F4F6F9] flex flex-col min-h-[calc(100vh-64px)]">
     <div className="bg-gradient-to-br from-[#1A4731] to-[#1E6B45] text-white py-10 px-4 relative overflow-hidden flex-grow flex flex-col">
@@ -412,10 +457,12 @@ const HomeView = ({ setCurrentPage }) => (
           />
         </svg>
       </div>
+
       <div className="max-w-4xl mx-auto text-center relative z-10 w-full flex-grow flex flex-col justify-center py-10">
         <div className="flex justify-center mb-8">
           <KemenagLogo className="w-28 h-28" />
         </div>
+
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight drop-shadow-md">
           PORTAL DOKUMEN PKKM
         </h1>
@@ -425,8 +472,9 @@ const HomeView = ({ setCurrentPage }) => (
         <p className="text-sm md:text-base text-green-100/80 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
           Sistem arsip digital terpadu untuk pengumpulan dan verifikasi bukti
           fisik. <br className="hidden sm:block" />
-          Tahun Pelajaran 2024/2025 • MIN 5 TANGERANG (MIN Legok)
+          Tahun Pelajaran 2024/2026 • MIN 5 TANGERANG (MIN Legok)
         </p>
+
         <div className="flex justify-center">
           <button
             onClick={() => setCurrentPage("documents")}
@@ -436,16 +484,19 @@ const HomeView = ({ setCurrentPage }) => (
           </button>
         </div>
       </div>
+
+      {/* Social Media & Info Bar */}
       <div className="relative z-10 w-full max-w-7xl mx-auto mt-auto pt-6 pb-2 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center text-sm text-green-100/80">
         <p className="mb-4 sm:mb-0 font-medium tracking-wide">
-          © 2025 MIN 5 TANGERANG
+          © 2026 MIN 5 TANGERANG
         </p>
+
         <div className="flex items-center space-x-6">
           <a
             href="#"
             className="flex items-center hover:text-white hover:-translate-y-1 transition-all duration-300 group"
           >
-            <Share2 className="w-5 h-5 sm:mr-2" />
+            <Facebook className="w-5 h-5 sm:mr-2" />
             <span className="hidden sm:inline font-medium text-green-100/90 group-hover:text-white">
               MIN 5 Tangerang
             </span>
@@ -454,7 +505,7 @@ const HomeView = ({ setCurrentPage }) => (
             href="#"
             className="flex items-center hover:text-white hover:-translate-y-1 transition-all duration-300 group"
           >
-            <Globe2 className="w-5 h-5 sm:mr-2" />
+            <Instagram className="w-5 h-5 sm:mr-2" />
             <span className="hidden sm:inline font-medium text-green-100/90 group-hover:text-white">
               @min5tangerang
             </span>
@@ -463,7 +514,7 @@ const HomeView = ({ setCurrentPage }) => (
             href="#"
             className="flex items-center hover:text-white hover:-translate-y-1 transition-all duration-300 group"
           >
-            <Play className="w-5 h-5 sm:mr-2" />
+            <Youtube className="w-5 h-5 sm:mr-2" />
             <span className="hidden sm:inline font-medium text-green-100/90 group-hover:text-white">
               MIN 5 TV
             </span>
@@ -474,9 +525,11 @@ const HomeView = ({ setCurrentPage }) => (
   </div>
 );
 
+// --- VIEW 2: DAFTAR KATEGORI DOKUMEN ---
 const DocumentsOverviewView = ({ setCurrentPage }) => (
   <div className="animate-in fade-in zoom-in-95 duration-500 bg-[#F4F6F9] min-h-[calc(100vh-64px)] py-12">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Breadcrumb & Header */}
       <div className="mb-10">
         <p className="text-xs sm:text-sm text-[#64748B] mb-4">
           <button
@@ -495,252 +548,60 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
           </span>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {DOCUMENTS_V2.map((doc) => {
-          const totalFiles = doc.subheadings.reduce(
-            (acc, sub) => acc + (sub.files ? sub.files.length : 0),
-            0,
-          );
-          return (
-            <div
-              key={doc.id}
-              className="bg-white rounded-xl p-6 shadow-[0_1px_8px_rgba(0,0,0,0.07)] border border-[#E2E8F0] hover:shadow-lg transition-all duration-300 flex flex-col h-full group hover:-translate-y-1"
-            >
-              <div className="flex items-start mb-4">
-                <div className="mr-4 mt-1">
-                  <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-[#1A4731] transition-colors">
-                    <FolderOpen
-                      className="w-6 h-6 text-[#C8961E] group-hover:text-white transition-colors"
-                      strokeWidth={2}
-                    />
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <div className="text-xs font-bold text-[#64748B] tracking-wider mb-1">
-                    DOKUMEN {doc.id}
-                  </div>
-                  <h3 className="text-lg font-bold text-[#1E293B] leading-tight mb-2 group-hover:text-[#1A4731] transition-colors">
-                    {doc.title}
-                  </h3>
-                  <div className="text-sm text-[#64748B] font-medium flex items-center">
-                    <span className="bg-gray-100 px-2 py-0.5 rounded text-xs mr-2">
-                      {doc.subheadings.length} Sub-topik
-                    </span>
-                    <span className="bg-gray-100 px-2 py-0.5 rounded text-xs">
-                      {totalFiles} File
-                    </span>
-                  </div>
+
+      {/* Documents Grid Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {DOCUMENTS_V2.map((doc) => (
+          <div
+            key={doc.id}
+            className="bg-white rounded-xl p-6 shadow-[0_1px_8px_rgba(0,0,0,0.07)] border border-[#E2E8F0] hover:shadow-lg transition-all duration-300 flex flex-col h-full group hover:-translate-y-1"
+          >
+            <div className="flex items-start mb-4">
+              <div className="mr-4 mt-1">
+                <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-[#1A4731] transition-colors">
+                  <FolderOpen
+                    className="w-6 h-6 text-[#C8961E] group-hover:text-white transition-colors"
+                    strokeWidth={2}
+                  />
                 </div>
               </div>
-              <div className="mt-4 flex-grow">
-                <p className="text-xs font-semibold text-[#64748B] mb-3 uppercase tracking-wider">
-                  Pratinjau Topik:
-                </p>
-                <ul className="space-y-2 mb-6">
-                  {doc.subheadings.slice(0, 3).map((sub) => (
-                    <li
-                      key={sub.id}
-                      className="text-sm text-[#1E293B] flex items-start"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#C8961E] mt-1.5 mr-2 shrink-0"></span>
-                      <span className="line-clamp-1">
-                        {sub.id} {sub.title}
-                      </span>
-                    </li>
-                  ))}
-                  {doc.subheadings.length > 3 && (
-                    <li className="text-sm text-[#64748B] italic pl-3.5">
-                      + {doc.subheadings.length - 3} lainnya
-                    </li>
-                  )}
-                  {doc.subheadings.length === 0 && (
-                    <li className="text-sm text-gray-400 italic">
-                      Belum ada sub-topik
-                    </li>
-                  )}
-                </ul>
+              <div className="flex-1">
+                <div className="text-xs font-bold text-[#64748B] tracking-wider mb-1">
+                  DOKUMEN {doc.id}
+                </div>
+                <h3 className="text-lg font-bold text-[#1E293B] leading-tight group-hover:text-[#1A4731] transition-colors">
+                  {doc.title}
+                </h3>
               </div>
-              <button
-                onClick={() => setCurrentPage(`doc_${doc.id}`)}
-                className="w-full py-2.5 bg-[#F4F6F9] border border-[#E2E8F0] text-[#1A4731] rounded-lg font-semibold hover:bg-[#1A4731] hover:text-white transition-colors flex justify-center items-center"
-              >
-                Buka Dokumen <ChevronRight className="ml-1.5 w-4 h-4" />
-              </button>
             </div>
-          );
-        })}
+
+            <div className="mt-2 flex-grow mb-6">
+              <p className="text-sm text-[#64748B] leading-relaxed">
+                {doc.desc}
+              </p>
+            </div>
+
+            <button
+              onClick={() => setCurrentPage(`doc_${doc.id}`)}
+              className="w-full py-2.5 bg-[#F4F6F9] border border-[#E2E8F0] text-[#1A4731] rounded-lg font-semibold hover:bg-[#1A4731] hover:text-white transition-colors flex justify-center items-center mt-auto"
+            >
+              Buka Dokumen <ChevronRight className="ml-1.5 w-4 h-4" />
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   </div>
 );
 
-const SubheadingItem = ({ sub, isExpanded, onToggle }) => {
-  const [isUploading, setIsUploading] = useState(false);
-  const fileCount = sub.files ? sub.files.length : 0;
-
-  const getFileBadge = (type) => {
-    switch (type) {
-      case "PDF":
-        return (
-          <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-red-100 text-[#DC2626] border border-red-200">
-            PDF
-          </span>
-        );
-      case "IMG":
-        return (
-          <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-100 text-[#2563EB] border border-blue-200">
-            IMG
-          </span>
-        );
-      case "DOCX":
-        return (
-          <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-green-100 text-[#16A34A] border border-green-200">
-            DOCX
-          </span>
-        );
-      default:
-        return (
-          <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-600 border border-gray-200">
-            {type}
-          </span>
-        );
-    }
-  };
-
-  const getFileIcon = (type) => {
-    switch (type) {
-      case "PDF":
-        return <FileText className="w-5 h-5 text-[#DC2626]" />;
-      case "IMG":
-        return <ImageIcon className="w-5 h-5 text-[#2563EB]" />;
-      case "DOCX":
-        return <FileIcon className="w-5 h-5 text-[#16A34A]" />;
-      default:
-        return <FileIcon className="w-5 h-5 text-gray-500" />;
-    }
-  };
-
-  return (
-    <div className="border border-[#E2E8F0] rounded-xl overflow-hidden mb-3 bg-white shadow-sm transition-all">
-      <div
-        className={`flex items-start sm:items-center justify-between p-4 cursor-pointer transition-colors ${isExpanded ? "bg-[#F0FAF4] border-b border-[#E2E8F0]" : "hover:bg-[#F4F6F9]"}`}
-        onClick={onToggle}
-      >
-        <div className="flex items-start flex-1 pr-4">
-          <div className="mt-0.5 mr-3 text-[#1A4731]">
-            {isExpanded ? (
-              <ChevronDown className="w-5 h-5" />
-            ) : (
-              <ChevronRight className="w-5 h-5" />
-            )}
-          </div>
-          <div>
-            <h4 className="font-semibold text-[#1E293B] text-[15px] sm:text-base leading-snug">
-              {sub.id} {sub.title}
-            </h4>
-            <p className="text-xs sm:text-sm text-[#64748B] mt-1">
-              {fileCount} file tersedia
-            </p>
-          </div>
-        </div>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            if (!isExpanded) onToggle();
-            setIsUploading(!isUploading);
-          }}
-          className="flex items-center px-3 py-1.5 border border-[#E2E8F0] bg-white text-[#1A4731] rounded-md text-xs font-medium hover:bg-[#1A4731] hover:text-white transition-colors shrink-0"
-        >
-          <Plus className="w-3.5 h-3.5 mr-1" /> Upload
-        </button>
-      </div>
-      {isExpanded && (
-        <div className="bg-white">
-          {isUploading && (
-            <div className="p-4 bg-[#F8FAFC] border-b border-[#E2E8F0]">
-              <div className="border-2 border-dashed border-[#CBD5E1] rounded-lg p-6 bg-white hover:bg-[#F0FAF4] hover:border-[#1A4731] transition-colors group text-center cursor-pointer relative">
-                <UploadCloud className="w-8 h-8 text-[#94A3B8] mx-auto mb-2 group-hover:text-[#1A4731]" />
-                <p className="text-sm font-medium text-[#1E293B]">
-                  Drag & drop file ke sini
-                </p>
-                <p className="text-xs text-[#64748B] mt-1">
-                  atau klik untuk pilih file (PDF, JPG, PNG, DOCX - Maks 50MB)
-                </p>
-                <p className="text-[10px] text-[#94A3B8] italic mt-3 bg-gray-50 inline-block px-2 py-1 rounded">
-                  Nama file otomatis mengikuti nama asli dari perangkat Anda.
-                </p>
-              </div>
-              <div className="flex justify-end mt-3 space-x-2">
-                <button
-                  onClick={() => setIsUploading(false)}
-                  className="px-3 py-1.5 text-xs font-medium text-[#64748B] hover:bg-gray-200 rounded"
-                >
-                  Batal
-                </button>
-                <button className="px-3 py-1.5 text-xs font-medium bg-[#1A4731] text-white rounded hover:bg-[#1E6B45]">
-                  Upload File
-                </button>
-              </div>
-            </div>
-          )}
-          <div className="divide-y divide-[#E2E8F0]">
-            {fileCount > 0 ? (
-              sub.files.map((file, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 flex items-center justify-between hover:bg-[#F4F6F9] transition-colors group"
-                >
-                  <div className="flex items-center flex-1 min-w-0 pr-4">
-                    <div className="mr-3 p-2 bg-gray-50 rounded-lg group-hover:bg-white border border-transparent group-hover:border-gray-200 transition-all">
-                      {getFileIcon(file.type)}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center mb-1 space-x-2">
-                        {getFileBadge(file.type)}
-                        <p className="text-sm font-medium text-[#1E293B] truncate">
-                          {file.name}
-                        </p>
-                      </div>
-                      <p className="text-xs text-[#64748B] flex items-center">
-                        {file.size} <span className="mx-1.5">•</span>{" "}
-                        {file.date}
-                      </p>
-                    </div>
-                  </div>
-                  <button className="text-[#1A4731] bg-transparent hover:bg-green-50 p-2 rounded-lg border border-transparent hover:border-[#1A4731]/30 transition-all">
-                    <Download className="w-4 h-4" />
-                  </button>
-                </div>
-              ))
-            ) : (
-              <div className="p-8 text-center">
-                <p className="text-sm text-[#94A3B8] italic">
-                  Belum ada file di folder ini.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
+// --- VIEW 3: DOKUMEN (IFRAME ONEDRIVE) ---
 const DocumentView = ({ docId, setCurrentPage }) => {
   const currentDoc =
     DOCUMENTS_V2.find((d) => d.id === parseInt(docId)) || DOCUMENTS_V2[0];
-  const totalSubheadings = currentDoc.subheadings.length;
-  const totalFiles = currentDoc.subheadings.reduce(
-    (acc, sub) => acc + (sub.files ? sub.files.length : 0),
-    0,
-  );
-  const [expandedSubs, setExpandedSubs] = useState({ 1.1: true });
-
-  const toggleSub = (id) =>
-    setExpandedSubs((prev) => ({ ...prev, [id]: !prev[id] }));
 
   return (
     <div className="bg-[#F4F6F9] min-h-[calc(100vh-64px)] pb-16">
+      {/* Breadcrumb Area */}
       <div className="bg-white border-b border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <p className="text-xs sm:text-sm text-[#64748B]">
@@ -764,10 +625,13 @@ const DocumentView = ({ docId, setCurrentPage }) => {
           </p>
         </div>
       </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-300">
         <div className="flex flex-col xl:flex-row gap-8">
-          <div className="flex-1 max-w-4xl">
-            <div className="bg-[#F0FAF4] rounded-xl border border-[#E2E8F0] border-l-4 border-l-[#1A4731] p-5 sm:p-6 mb-8 flex items-start shadow-sm">
+          {/* Main Content Area */}
+          <div className="flex-1">
+            {/* Header Card */}
+            <div className="bg-[#F0FAF4] rounded-xl border border-[#E2E8F0] border-l-4 border-l-[#1A4731] p-5 sm:p-6 mb-6 flex items-start shadow-sm">
               <FolderOpen
                 className="w-10 h-10 text-[#C8961E] mr-4 hidden sm:block shrink-0"
                 strokeWidth={1.5}
@@ -777,35 +641,40 @@ const DocumentView = ({ docId, setCurrentPage }) => {
                   <FolderOpen
                     className="w-4 h-4 mr-1.5 sm:hidden inline"
                     strokeWidth={2}
-                  />{" "}
+                  />
                   DOKUMEN {currentDoc.id}
                 </div>
                 <h1 className="text-2xl sm:text-3xl font-bold text-[#1E293B] mb-2 leading-tight">
                   {currentDoc.title}
                 </h1>
-                <p className="text-sm text-[#64748B] font-medium flex items-center">
-                  {totalSubheadings} sub-topik <span className="mx-2">•</span>{" "}
-                  {totalFiles} file tersedia
+                <p className="text-sm text-[#64748B] font-medium leading-relaxed">
+                  {currentDoc.desc}
                 </p>
               </div>
             </div>
-            <div className="space-y-1">
-              {currentDoc.subheadings.length > 0 ? (
-                currentDoc.subheadings.map((sub) => (
-                  <SubheadingItem
-                    key={sub.id}
-                    sub={sub}
-                    isExpanded={!!expandedSubs[sub.id]}
-                    onToggle={() => toggleSub(sub.id)}
-                  />
-                ))
+
+            {/* Iframe OneDrive Container */}
+            <div className="bg-white border border-gray-200 rounded-xl overflow-hidden h-[600px] shadow-sm mt-6">
+              {currentDoc.embedUrl ? (
+                <iframe
+                  src={currentDoc.embedUrl}
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  title={currentDoc.title}
+                  className="block"
+                />
               ) : (
-                <div className="bg-white border border-[#E2E8F0] rounded-xl p-12 text-center text-[#64748B]">
-                  Konten dokumen ini sedang dalam tahap penyusunan.
+                <div className="flex h-full items-center justify-center p-6 text-center">
+                  <p className="text-gray-500">
+                    Tautan folder OneDrive belum dikonfigurasi oleh admin.
+                  </p>
                 </div>
               )}
             </div>
           </div>
+
+          {/* Desktop Sidebar Navigation */}
           <div className="hidden xl:block w-72 flex-shrink-0">
             <div className="bg-white rounded-xl shadow-[0_1px_8px_rgba(0,0,0,0.07)] border border-[#E2E8F0] p-5 sticky top-24">
               <h3 className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-4 pb-3 border-b border-gray-100">
@@ -816,7 +685,11 @@ const DocumentView = ({ docId, setCurrentPage }) => {
                   <button
                     key={doc.id}
                     onClick={() => setCurrentPage(`doc_${doc.id}`)}
-                    className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium flex items-center transition-colors ${currentDoc.id === doc.id ? "bg-[#1A4731] text-white shadow-sm" : "text-[#64748B] hover:bg-gray-100 hover:text-[#1E293B]"}`}
+                    className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium flex items-center transition-colors ${
+                      currentDoc.id === doc.id
+                        ? "bg-[#1A4731] text-white shadow-sm"
+                        : "text-[#64748B] hover:bg-gray-100 hover:text-[#1E293B]"
+                    }`}
                   >
                     <span className="w-5 text-center mr-2 opacity-60 font-bold">
                       {doc.id}.
@@ -833,16 +706,187 @@ const DocumentView = ({ docId, setCurrentPage }) => {
   );
 };
 
+// --- VIEW 4: TENTANG (ABOUT PAGE - PROFIL MIN 5 TANGERANG) ---
+const AboutView = ({ setCurrentPage }) => (
+  <div className="animate-in fade-in zoom-in-95 duration-500 bg-[#F4F6F9] min-h-[calc(100vh-64px)] py-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Breadcrumb & Header */}
+      <div className="mb-10 text-center sm:text-left">
+        <p className="text-xs sm:text-sm text-[#64748B] mb-4">
+          <button
+            onClick={() => setCurrentPage("home")}
+            className="hover:text-[#1A4731] font-medium transition-colors"
+          >
+            Beranda
+          </button>
+          <span className="mx-2">/</span>
+          <span className="text-[#1E293B] font-medium">Tentang Madrasah</span>
+        </p>
+        <h2 className="text-3xl sm:text-4xl font-bold text-[#1E293B] mb-3">
+          Tentang MIN 5 TANGERANG
+        </h2>
+        <p className="text-[#64748B] text-sm sm:text-base max-w-2xl">
+          Mengenal lebih dekat profil, visi, dan misi Madrasah Ibtidaiyah Negeri
+          5 Tangerang (MIN Legok).
+        </p>
+      </div>
+
+      {/* Content Sections */}
+      <div className="space-y-6">
+        {/* Card 1: Profil Madrasah */}
+        <div className="bg-white rounded-xl p-6 sm:p-8 shadow-[0_1px_8px_rgba(0,0,0,0.07)] border border-[#E2E8F0] hover:shadow-md transition-shadow">
+          <div className="flex items-center mb-5 border-b border-gray-100 pb-4">
+            <div className="w-12 h-12 bg-[#F0FAF4] rounded-xl flex items-center justify-center mr-4 shrink-0">
+              <BookOpen className="w-6 h-6 text-[#1A4731]" />
+            </div>
+            <h3 className="text-xl font-bold text-[#1E293B]">
+              Profil Madrasah
+            </h3>
+          </div>
+          <p className="text-[#64748B] leading-relaxed text-sm sm:text-base text-justify">
+            Madrasah Ibtidaiyah Negeri (MIN) 5 Tangerang, yang sebelumnya
+            dikenal luas oleh masyarakat luas sebagai <strong>MIN Legok</strong>
+            , adalah lembaga pendidikan tingkat dasar berciri khas agama Islam
+            yang diselenggarakan di bawah naungan Kementerian Agama Republik
+            Indonesia. Kami berkomitmen untuk menyelenggarakan pendidikan dasar
+            yang berkualitas dengan memadukan kurikulum pendidikan nasional dan
+            pendidikan keagamaan (Islam) secara terpadu dan komprehensif.
+          </p>
+        </div>
+
+        {/* Card 2: Visi & Misi */}
+        <div className="bg-white rounded-xl p-6 sm:p-8 shadow-[0_1px_8px_rgba(0,0,0,0.07)] border border-[#E2E8F0] hover:shadow-md transition-shadow">
+          <div className="flex items-center mb-5 border-b border-gray-100 pb-4">
+            <div className="w-12 h-12 bg-[#F0FAF4] rounded-xl flex items-center justify-center mr-4 shrink-0">
+              <Target className="w-6 h-6 text-[#1A4731]" />
+            </div>
+            <h3 className="text-xl font-bold text-[#1E293B]">Visi & Misi</h3>
+          </div>
+
+          <div className="mb-6">
+            <h4 className="font-bold text-[#1A4731] text-lg mb-2">Visi:</h4>
+            <p className="text-[#1E293B] text-sm sm:text-base italic bg-[#F4F6F9] p-4 rounded-lg border-l-4 border-[#C8961E]">
+              "Terwujudnya Peserta Didik yang Unggul dalam Prestasi, Berakhlakul
+              Karimah, Terampil, Mandiri, dan Berwawasan Lingkungan Berpijak
+              pada Nilai-Nilai Ajaran Islam."
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-[#1A4731] text-lg mb-3">Misi:</h4>
+            <ul className="space-y-3 text-[#64748B] text-sm sm:text-base list-disc pl-5">
+              <li>
+                Menyelenggarakan proses pembelajaran yang aktif, inovatif,
+                kreatif, efektif, dan menyenangkan (PAIKEM).
+              </li>
+              <li>
+                Membentuk karakter peserta didik yang Islami melalui pembiasaan
+                ibadah dan implementasi akhlak mulia dalam kehidupan
+                sehari-hari.
+              </li>
+              <li>
+                Mengembangkan potensi kecerdasan intelektual, emosional, dan
+                spiritual peserta didik secara seimbang.
+              </li>
+              <li>
+                Menumbuhkembangkan semangat keunggulan secara intensif kepada
+                seluruh warga madrasah.
+              </li>
+              <li>
+                Menjalin kerja sama yang harmonis antara madrasah, orang tua
+                murid, dan masyarakat lingkungan sekitar.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Card 3: Keunggulan & Dedikasi */}
+        <div className="bg-white rounded-xl p-6 sm:p-8 shadow-[0_1px_8px_rgba(0,0,0,0.07)] border border-[#E2E8F0] hover:shadow-md transition-shadow">
+          <div className="flex items-center mb-5 border-b border-gray-100 pb-4">
+            <div className="w-12 h-12 bg-[#F0FAF4] rounded-xl flex items-center justify-center mr-4 shrink-0">
+              <Award className="w-6 h-6 text-[#1A4731]" />
+            </div>
+            <h3 className="text-xl font-bold text-[#1E293B]">
+              Dedikasi Pendidikan
+            </h3>
+          </div>
+          <p className="text-[#64748B] leading-relaxed text-sm sm:text-base text-justify">
+            Didukung oleh tenaga pendidik (guru) yang kompeten, profesional, dan
+            berdedikasi tinggi, MIN 5 Tangerang terus berinovasi dalam
+            memberikan layanan pendidikan terbaik bagi masyarakat. Kami
+            menyediakan fasilitas pembelajaran yang representatif guna menunjang
+            keberhasilan anak didik meraih cita-citanya.
+          </p>
+        </div>
+
+        {/* Card 4: Identitas Instansi */}
+        <div className="bg-[#1A4731] text-white rounded-xl p-6 sm:p-8 shadow-md relative overflow-hidden mt-8">
+          <div className="absolute top-0 right-0 -mt-10 -mr-10 opacity-10 pointer-events-none">
+            <svg width="300" height="300" viewBox="0 0 100 100">
+              <circle
+                cx="50"
+                cy="50"
+                r="40"
+                stroke="white"
+                strokeWidth="3"
+                fill="none"
+              />
+            </svg>
+          </div>
+          <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left">
+            <div className="mb-6 sm:mb-0 sm:mr-8 shrink-0">
+              <KemenagLogo className="w-24 h-24" minimal={true} />
+            </div>
+            <div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-2">
+                MIN 5 TANGERANG
+              </h3>
+              <p className="text-green-100 font-medium mb-1">
+                Madrasah Ibtidaiyah Negeri Legok
+              </p>
+              <p className="text-green-200/80 text-sm mb-4">
+                Kabupaten Tangerang, Provinsi Banten
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-green-50/90 mt-4">
+                <p className="flex items-center justify-center sm:justify-start">
+                  <MapPin className="w-4 h-4 mr-2 opacity-80" /> Jl. Pendidikan,
+                  Tangerang
+                </p>
+                <p className="flex items-center justify-center sm:justify-start">
+                  <Phone className="w-4 h-4 mr-2 opacity-80" /> (021) 55XXXX
+                </p>
+                <p className="flex items-center justify-center sm:justify-start">
+                  <Mail className="w-4 h-4 mr-2 opacity-80" />{" "}
+                  admin@min5tangerang.sch.id
+                </p>
+                <p className="flex items-center justify-center sm:justify-start">
+                  <Globe className="w-4 h-4 mr-2 opacity-80" />{" "}
+                  min5tangerang.sch.id
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// --- MAIN APP COMPONENT ---
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
 
   return (
     <div className="min-h-screen flex flex-col font-sans selection:bg-[#1E6B45] selection:text-white bg-[#F4F6F9]">
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+
       <main className="flex-grow flex flex-col">
         {currentPage === "home" && <HomeView setCurrentPage={setCurrentPage} />}
         {currentPage === "documents" && (
           <DocumentsOverviewView setCurrentPage={setCurrentPage} />
+        )}
+        {currentPage === "about" && (
+          <AboutView setCurrentPage={setCurrentPage} />
         )}
         {currentPage.startsWith("doc_") && (
           <DocumentView
@@ -851,6 +895,8 @@ export default function App() {
           />
         )}
       </main>
+
+      {/* Footer tidak tampil di Landing Page (home) */}
       {currentPage !== "home" && <Footer />}
     </div>
   );
