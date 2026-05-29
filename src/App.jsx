@@ -9,9 +9,6 @@ import {
   Phone,
   Mail,
   Globe,
-  Instagram,
-  Facebook,
-  Youtube,
   Target,
   BookOpen,
   Award,
@@ -62,6 +59,48 @@ const colors = {
   textSec: "#64748B",
   border: "#E2E8F0",
 };
+
+const FacebookIcon = ({ className = "w-4 h-4" }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+    className={className}
+  >
+    <path d="M14 8.5V7c0-.8.5-1 1-1h2V3h-3c-2.2 0-4 1.8-4 4v1.5H8V12h2v9h4v-9h2.5l.5-3.5H14Z" />
+  </svg>
+);
+
+const InstagramIcon = ({ className = "w-4 h-4" }) => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
+    <rect
+      x="4"
+      y="4"
+      width="16"
+      height="16"
+      rx="4"
+      stroke="currentColor"
+      strokeWidth="2"
+    />
+    <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" />
+    <circle cx="17" cy="7" r="1.2" fill="currentColor" />
+  </svg>
+);
+
+const YoutubeIcon = ({ className = "w-4 h-4" }) => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
+    <rect
+      x="3"
+      y="6"
+      width="18"
+      height="12"
+      rx="4"
+      stroke="currentColor"
+      strokeWidth="2"
+    />
+    <path d="M11 10.2v3.6L14.2 12 11 10.2Z" fill="currentColor" />
+  </svg>
+);
 
 // --- KOMPONEN LOGO KEMENAG KUSTOM (MIN LEGOK KAB. TANGERANG) ---
 const KemenagLogo = ({
@@ -456,7 +495,7 @@ const HomeView = ({ setCurrentPage }) => (
             href="#"
             className="flex items-center hover:text-white hover:-translate-y-1 transition-all duration-300 group"
           >
-            <Facebook className="w-5 h-5 sm:mr-2" />
+            <FacebookIcon className="w-5 h-5 sm:mr-2" />
             <span className="hidden sm:inline font-medium text-green-100/90 group-hover:text-white">
               MIN 5 Tangerang
             </span>
@@ -465,7 +504,7 @@ const HomeView = ({ setCurrentPage }) => (
             href="#"
             className="flex items-center hover:text-white hover:-translate-y-1 transition-all duration-300 group"
           >
-            <Instagram className="w-5 h-5 sm:mr-2" />
+            <InstagramIcon className="w-5 h-5 sm:mr-2" />
             <span className="hidden sm:inline font-medium text-green-100/90 group-hover:text-white">
               @min5tangerang
             </span>
@@ -474,7 +513,7 @@ const HomeView = ({ setCurrentPage }) => (
             href="#"
             className="flex items-center hover:text-white hover:-translate-y-1 transition-all duration-300 group"
           >
-            <Youtube className="w-5 h-5 sm:mr-2" />
+            <YoutubeIcon className="w-5 h-5 sm:mr-2" />
             <span className="hidden sm:inline font-medium text-green-100/90 group-hover:text-white">
               MIN 5 TV
             </span>
@@ -563,7 +602,7 @@ const DocumentView = ({ docId, setCurrentPage }) => {
   const handleOpenDocument = () => {
     if (!hasDocumentLink) return;
 
-    window.open(currentDoc.embedUrl, '_blank', 'noopener,noreferrer');
+    window.open(currentDoc.embedUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -624,13 +663,17 @@ const DocumentView = ({ docId, setCurrentPage }) => {
             <div className="bg-white border border-[#E2E8F0] rounded-2xl shadow-[0_10px_30px_rgba(15,23,42,0.06)] p-6 sm:p-10 min-h-[420px] flex items-center justify-center">
               <div className="max-w-2xl w-full text-center rounded-2xl border border-dashed border-[#E2E8F0] bg-[#F9FBFD] px-6 py-10 sm:px-10 sm:py-14">
                 <div className="flex items-center justify-center w-20 h-20 mx-auto rounded-full bg-[#FFF7E6] mb-5">
-                  <FolderOpen className="w-10 h-10 text-[#C8961E]" strokeWidth={1.8} />
+                  <FolderOpen
+                    className="w-10 h-10 text-[#C8961E]"
+                    strokeWidth={1.8}
+                  />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-[#1E293B] mb-3 leading-tight">
                   Dokumen tersedia di Cloud Penyimpanan OneDrive Resmi.
                 </h3>
                 <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-xl mx-auto">
-                  Silakan klik tombol di bawah untuk memeriksa, membaca, dan mengunduh seluruh bukti fisik secara transparan.
+                  Silakan klik tombol di bawah untuk memeriksa, membaca, dan
+                  mengunduh seluruh bukti fisik secara transparan.
                 </p>
 
                 <button
