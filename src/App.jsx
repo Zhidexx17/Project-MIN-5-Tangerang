@@ -61,31 +61,35 @@ const Youtube = ({ className = "w-5 h-5", ...props }) => (
 const DOCUMENTS_V2 = [
   {
     id: 1,
-    title: "Usaha Pengembangan Madrasah",
+    title: "1. Usaha Pengembangan Madrasah",
     desc: "Buku kerja dan bukti fisik perencanaan, pelaksanaan, serta evaluasi program pengembangan madrasah secara berkelanjutan.",
-    embedUrl: "",
+    embedUrl:
+      "https://1drv.ms/f/c/c2186077387f815b/IgAey93x5NuFR7dJCgTE5osFAXGWxVNr8AyDBgnehm-MJMs?e=EBErEz",
   },
   {
     id: 2,
-    title: "Pelaksanaan Tugas Manajerial",
+    title: "2. Pelaksanaan Tugas Manajerial",
     desc: "Dokumen terkait manajemen standar nasional pendidikan, kelembagaan, dan pengelolaan sumber daya administrasi.",
-    embedUrl: "",
+    embedUrl:
+      "https://1drv.ms/f/c/c2186077387f815b/IgAW13NePHeGT5WX17-6PAAuAem4a4juEsOamlqrzcEPG98?e=mWHFeM",
   },
   {
     id: 3,
-    title: "Pengembangan Kewirausahaan",
+    title: "3. Pengembangan Kewirausahaan",
     desc: "Inovasi, kerja keras, dan pantang menyerah dalam menciptakan peluang serta mengembangkan madrasah.",
-    embedUrl: "",
+    embedUrl:
+      "https://1drv.ms/f/c/c2186077387f815b/IgCuP2fmAWdHSYAWJ_Ce1vkSAVWv6NZuwtWkZ9PTaLfTaY4?e=pSwM7O",
   },
   {
     id: 4,
-    title: "Supervisi Guru & Tenaga Kependidikan",
+    title: "4. Supervisi Guru & Tenaga Kependidikan",
     desc: "Program, instrumen, pelaksanaan, dan tindak lanjut supervisi akademik terhadap pendidik dan tenaga kependidikan.",
-    embedUrl: "",
+    embedUrl:
+      "https://1drv.ms/f/c/c2186077387f815b/IgAOk0JQOwP3QbNj4FkIYhL_Aax1unoLu3N4Mi4ImE8BMlE?e=viDcfA",
   },
   {
     id: 5,
-    title: "Hasil Kinerja Kepala Madrasah",
+    title: "5. Hasil Kinerja Kepala Madrasah",
     desc: "Prestasi dan capaian hasil kerja dari kepala madrasah yang telah diraih selama masa tugas.",
     embedUrl: "",
   },
@@ -269,7 +273,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
                     >
                       <FolderOpen className="w-4 h-4 mr-3 text-[#C8961E] group-hover:text-[#1A4731]" />
                       <span className="truncate">
-                        Dokumen {doc.id} — {doc.title.split(" ")[0]}...
+                       {doc.title}
                       </span>
                     </button>
                   ))}
@@ -539,12 +543,12 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
             Beranda
           </button>
           <span className="mx-2">/</span>
-          <span className="text-[#1E293B] font-medium">Kategori Dokumen</span>
+          <span className="text-[#1E293B] font-medium">Dokumen</span>
         </p>
         <div className="flex flex-col sm:flex-row justify-between items-baseline border-b border-gray-200 pb-5">
           <h2 className="text-3xl font-bold text-[#1E293B]">Dokumen PKKM</h2>
           <span className="text-[#64748B] text-sm font-medium mt-2 sm:mt-0 bg-gray-200 px-3 py-1 rounded-full">
-            5 Kategori Utama
+            Dokumen
           </span>
         </div>
       </div>
@@ -556,7 +560,7 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
             key={doc.id}
             className="bg-white rounded-xl p-6 shadow-[0_1px_8px_rgba(0,0,0,0.07)] border border-[#E2E8F0] hover:shadow-lg transition-all duration-300 flex flex-col h-full group hover:-translate-y-1"
           >
-            <div className="flex items-start mb-4">
+            <div className="flex items-center mb-4"> {/* Ubah Aligment Card Judul Jadi start/center */}
               <div className="mr-4 mt-1">
                 <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-[#1A4731] transition-colors">
                   <FolderOpen
@@ -566,10 +570,7 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
                 </div>
               </div>
               <div className="flex-1">
-                <div className="text-xs font-bold text-[#64748B] tracking-wider mb-1">
-                  DOKUMEN {doc.id}
-                </div>
-                <h3 className="text-lg font-bold text-[#1E293B] leading-tight group-hover:text-[#1A4731] transition-colors">
+                <h3 className="text-lg font-bold text-[#1E293B] leading-snug group-hover:text-[#1A4731] transition-colors">
                   {doc.title}
                 </h3>
               </div>
@@ -593,6 +594,36 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
     </div>
   </div>
 );
+
+const getOneDriveEmbedUrl = (url) => {
+  if (!url) return "";
+
+  try {
+    const normalizedUrl = new URL(url);
+    const pathname = normalizedUrl.pathname.toLowerCase();
+
+    if (
+      normalizedUrl.hostname.includes("onedrive.live.com") &&
+      (pathname.includes("/redir") || pathname.includes("/view"))
+    ) {
+      normalizedUrl.pathname = normalizedUrl.pathname.replace(
+        /\/(redir|view(?:\.aspx)?)$/i,
+        "/embed",
+      );
+      normalizedUrl.searchParams.set("embed", "1");
+      return normalizedUrl.toString();
+    }
+
+    if (normalizedUrl.hostname.includes("onedrive.live.com")) {
+      normalizedUrl.searchParams.set("embed", "1");
+      return normalizedUrl.toString();
+    }
+
+    return url;
+  } catch {
+    return url.replace(/\/redir(\?|$)/i, "/embed$1");
+  }
+};
 
 // --- VIEW 3: DOKUMEN (IFRAME ONEDRIVE) ---
 const DocumentView = ({ docId, setCurrentPage }) => {
@@ -620,7 +651,7 @@ const DocumentView = ({ docId, setCurrentPage }) => {
             </button>
             <span className="mx-2">/</span>
             <span className="text-[#1E293B] font-medium">
-              Dokumen {currentDoc.id}
+              {currentDoc.title}
             </span>
           </p>
         </div>
@@ -631,12 +662,12 @@ const DocumentView = ({ docId, setCurrentPage }) => {
           {/* Main Content Area */}
           <div className="flex-1">
             {/* Header Card */}
-            <div className="bg-[#F0FAF4] rounded-xl border border-[#E2E8F0] border-l-4 border-l-[#1A4731] p-5 sm:p-6 mb-6 flex items-start shadow-sm">
+            <div className="bg-[#F0FAF4] rounded-xl border border-[#E2E8F0] border-l-4 border-l-[#1A4731] p-5 sm:p-6 mb-6 flex items-center shadow-sm">
               <FolderOpen
                 className="w-10 h-10 text-[#C8961E] mr-4 hidden sm:block shrink-0"
                 strokeWidth={1.5}
               />
-              <div>
+              <div className="flex-1">
                 <div className="text-xs font-bold text-[#1A4731] tracking-wider mb-1 flex items-center">
                   <FolderOpen
                     className="w-4 h-4 mr-1.5 sm:hidden inline"
@@ -657,7 +688,7 @@ const DocumentView = ({ docId, setCurrentPage }) => {
             <div className="bg-white border border-gray-200 rounded-xl overflow-hidden h-[600px] shadow-sm mt-6">
               {currentDoc.embedUrl ? (
                 <iframe
-                  src={currentDoc.embedUrl}
+                  src={getOneDriveEmbedUrl(currentDoc.embedUrl)}
                   width="100%"
                   height="100%"
                   frameBorder="0"
@@ -691,9 +722,6 @@ const DocumentView = ({ docId, setCurrentPage }) => {
                         : "text-[#64748B] hover:bg-gray-100 hover:text-[#1E293B]"
                     }`}
                   >
-                    <span className="w-5 text-center mr-2 opacity-60 font-bold">
-                      {doc.id}.
-                    </span>
                     <span className="truncate">{doc.title}</span>
                   </button>
                 ))}
