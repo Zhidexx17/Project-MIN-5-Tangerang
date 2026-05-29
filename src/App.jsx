@@ -9,87 +9,43 @@ import {
   Phone,
   Mail,
   Globe,
+  Instagram,
+  Facebook,
+  Youtube,
   Target,
   BookOpen,
   Award,
 } from "lucide-react";
 
-// Local brand icons (lucide-react in this project doesn't include brand icons)
-const Facebook = ({ className = "w-5 h-5", ...props }) => (
-  <svg
-    viewBox="0 0 24 24"
-    className={className}
-    fill="currentColor"
-    aria-hidden="true"
-    {...props}
-  >
-    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.437 9.878v-6.99H8.898v-2.888h1.539V9.412c0-1.523.903-2.362 2.285-2.362.663 0 1.357.118 1.357.118v1.494h-.765c-.754 0-.99.47-.99.953v1.145h1.687l-.27 2.888h-1.417v6.99C18.343 21.128 22 16.991 22 12z" />
-  </svg>
-);
-
-const Instagram = ({ className = "w-5 h-5", ...props }) => (
-  <svg
-    viewBox="0 0 24 24"
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-    {...props}
-  >
-    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
-    <line x1="17.5" y1="6.5" x2="17.5" y2="6.5" />
-  </svg>
-);
-
-const Youtube = ({ className = "w-5 h-5", ...props }) => (
-  <svg
-    viewBox="0 0 24 24"
-    className={className}
-    fill="currentColor"
-    aria-hidden="true"
-    {...props}
-  >
-    <path d="M23.5 6.2a3 3 0 00-2.1-2.12C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.4.58A3 3 0 00.5 6.2 31.6 31.6 0 000 12a31.6 31.6 0 00.5 5.8 3 3 0 002.1 2.12C4.3 20.5 12 20.5 12 20.5s7.7 0 9.4-.58a3 3 0 002.1-2.12A31.6 31.6 0 0024 12a31.6 31.6 0 00-.5-5.8zM10 15.5v-7l6 3.5-6 3.5z" />
-  </svg>
-);
-
 // --- MOCK DATA V2 (REFACTORED) ---
 const DOCUMENTS_V2 = [
   {
     id: 1,
-    title: "1. Usaha Pengembangan Madrasah",
+    title: "Usaha Pengembangan Madrasah",
     desc: "Buku kerja dan bukti fisik perencanaan, pelaksanaan, serta evaluasi program pengembangan madrasah secara berkelanjutan.",
-    embedUrl:
-      "https://1drv.ms/f/c/c2186077387f815b/IgAey93x5NuFR7dJCgTE5osFAXGWxVNr8AyDBgnehm-MJMs?e=EBErEz",
+    embedUrl: "",
   },
   {
     id: 2,
-    title: "2. Pelaksanaan Tugas Manajerial",
+    title: "Pelaksanaan Tugas Manajerial",
     desc: "Dokumen terkait manajemen standar nasional pendidikan, kelembagaan, dan pengelolaan sumber daya administrasi.",
-    embedUrl:
-      "https://1drv.ms/f/c/c2186077387f815b/IgAW13NePHeGT5WX17-6PAAuAem4a4juEsOamlqrzcEPG98?e=mWHFeM",
+    embedUrl: "",
   },
   {
     id: 3,
-    title: "3. Pengembangan Kewirausahaan",
+    title: "Pengembangan Kewirausahaan",
     desc: "Inovasi, kerja keras, dan pantang menyerah dalam menciptakan peluang serta mengembangkan madrasah.",
-    embedUrl:
-      "https://1drv.ms/f/c/c2186077387f815b/IgCuP2fmAWdHSYAWJ_Ce1vkSAVWv6NZuwtWkZ9PTaLfTaY4?e=pSwM7O",
+    embedUrl: "",
   },
   {
     id: 4,
-    title: "4. Supervisi Guru & Tenaga Kependidikan",
+    title: "Supervisi Guru & Tenaga Kependidikan",
     desc: "Program, instrumen, pelaksanaan, dan tindak lanjut supervisi akademik terhadap pendidik dan tenaga kependidikan.",
-    embedUrl:
-      "https://1drv.ms/f/c/c2186077387f815b/IgAOk0JQOwP3QbNj4FkIYhL_Aax1unoLu3N4Mi4ImE8BMlE?e=viDcfA",
+    embedUrl: "",
   },
   {
     id: 5,
-    title: "5. Hasil Kinerja Kepala Madrasah",
+    title: "Hasil Kinerja Kepala Madrasah",
     desc: "Prestasi dan capaian hasil kerja dari kepala madrasah yang telah diraih selama masa tugas.",
     embedUrl: "",
   },
@@ -273,7 +229,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
                     >
                       <FolderOpen className="w-4 h-4 mr-3 text-[#C8961E] group-hover:text-[#1A4731]" />
                       <span className="truncate">
-                       {doc.title}
+                        Dokumen {doc.id} — {doc.title.split(" ")[0]}...
                       </span>
                     </button>
                   ))}
@@ -325,7 +281,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
               }}
               className="block w-full text-left font-semibold text-[#1A4731] py-1.5"
             >
-              Semua Dokumen
+              Semua Kategori Dokumen
             </button>
             {DOCUMENTS_V2.map((doc) => (
               <button
@@ -387,7 +343,7 @@ const Footer = () => (
                 href="#"
                 className="flex items-center hover:text-[#1A4731] transition-colors group"
               >
-                <Facebook className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
+                <FacebookIcon className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
                 <span>MIN 5 Tangerang</span>
               </a>
             </li>
@@ -396,7 +352,7 @@ const Footer = () => (
                 href="#"
                 className="flex items-center hover:text-[#1A4731] transition-colors group"
               >
-                <Instagram className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
+                <InstagramIcon className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
                 <span>@min5tangerang</span>
               </a>
             </li>
@@ -405,7 +361,7 @@ const Footer = () => (
                 href="#"
                 className="flex items-center hover:text-[#1A4731] transition-colors group"
               >
-                <Youtube className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
+                <YoutubeIcon className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
                 <span>MIN 5 TV</span>
               </a>
             </li>
@@ -440,7 +396,7 @@ const Footer = () => (
     </div>
 
     <div className="bg-[#1A4731] py-4 text-center text-xs text-white/70">
-      © 2026 MIN 5 TANGERANG — Kementerian Agama Tangerang
+      © 2025 MIN 5 TANGERANG — Kementerian Agama Tangerang
     </div>
   </footer>
 );
@@ -476,7 +432,7 @@ const HomeView = ({ setCurrentPage }) => (
         <p className="text-sm md:text-base text-green-100/80 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
           Sistem arsip digital terpadu untuk pengumpulan dan verifikasi bukti
           fisik. <br className="hidden sm:block" />
-          Tahun Pelajaran 2024/2026 • MIN 5 TANGERANG (MIN Legok)
+          Tahun Pelajaran 2024/2025 • MIN 5 TANGERANG (MIN Legok)
         </p>
 
         <div className="flex justify-center">
@@ -492,7 +448,7 @@ const HomeView = ({ setCurrentPage }) => (
       {/* Social Media & Info Bar */}
       <div className="relative z-10 w-full max-w-7xl mx-auto mt-auto pt-6 pb-2 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center text-sm text-green-100/80">
         <p className="mb-4 sm:mb-0 font-medium tracking-wide">
-          © 2026 MIN 5 TANGERANG
+          © 2025 MIN 5 TANGERANG
         </p>
 
         <div className="flex items-center space-x-6">
@@ -543,12 +499,12 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
             Beranda
           </button>
           <span className="mx-2">/</span>
-          <span className="text-[#1E293B] font-medium">Dokumen</span>
+          <span className="text-[#1E293B] font-medium">Kategori Dokumen</span>
         </p>
         <div className="flex flex-col sm:flex-row justify-between items-baseline border-b border-gray-200 pb-5">
           <h2 className="text-3xl font-bold text-[#1E293B]">Dokumen PKKM</h2>
           <span className="text-[#64748B] text-sm font-medium mt-2 sm:mt-0 bg-gray-200 px-3 py-1 rounded-full">
-            Dokumen
+            5 Kategori Utama
           </span>
         </div>
       </div>
@@ -560,7 +516,7 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
             key={doc.id}
             className="bg-white rounded-xl p-6 shadow-[0_1px_8px_rgba(0,0,0,0.07)] border border-[#E2E8F0] hover:shadow-lg transition-all duration-300 flex flex-col h-full group hover:-translate-y-1"
           >
-            <div className="flex items-center mb-4"> {/* Ubah Aligment Card Judul Jadi start/center */}
+            <div className="flex items-start mb-4">
               <div className="mr-4 mt-1">
                 <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-[#1A4731] transition-colors">
                   <FolderOpen
@@ -570,7 +526,10 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
                 </div>
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-bold text-[#1E293B] leading-snug group-hover:text-[#1A4731] transition-colors">
+                <div className="text-xs font-bold text-[#64748B] tracking-wider mb-1">
+                  DOKUMEN {doc.id}
+                </div>
+                <h3 className="text-lg font-bold text-[#1E293B] leading-tight group-hover:text-[#1A4731] transition-colors">
                   {doc.title}
                 </h3>
               </div>
@@ -594,36 +553,6 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
     </div>
   </div>
 );
-
-const getOneDriveEmbedUrl = (url) => {
-  if (!url) return "";
-
-  try {
-    const normalizedUrl = new URL(url);
-    const pathname = normalizedUrl.pathname.toLowerCase();
-
-    if (
-      normalizedUrl.hostname.includes("onedrive.live.com") &&
-      (pathname.includes("/redir") || pathname.includes("/view"))
-    ) {
-      normalizedUrl.pathname = normalizedUrl.pathname.replace(
-        /\/(redir|view(?:\.aspx)?)$/i,
-        "/embed",
-      );
-      normalizedUrl.searchParams.set("embed", "1");
-      return normalizedUrl.toString();
-    }
-
-    if (normalizedUrl.hostname.includes("onedrive.live.com")) {
-      normalizedUrl.searchParams.set("embed", "1");
-      return normalizedUrl.toString();
-    }
-
-    return url;
-  } catch {
-    return url.replace(/\/redir(\?|$)/i, "/embed$1");
-  }
-};
 
 // --- VIEW 3: DOKUMEN (IFRAME ONEDRIVE) ---
 const DocumentView = ({ docId, setCurrentPage }) => {
@@ -651,7 +580,7 @@ const DocumentView = ({ docId, setCurrentPage }) => {
             </button>
             <span className="mx-2">/</span>
             <span className="text-[#1E293B] font-medium">
-              {currentDoc.title}
+              Dokumen {currentDoc.id}
             </span>
           </p>
         </div>
@@ -662,12 +591,12 @@ const DocumentView = ({ docId, setCurrentPage }) => {
           {/* Main Content Area */}
           <div className="flex-1">
             {/* Header Card */}
-            <div className="bg-[#F0FAF4] rounded-xl border border-[#E2E8F0] border-l-4 border-l-[#1A4731] p-5 sm:p-6 mb-6 flex items-center shadow-sm">
+            <div className="bg-[#F0FAF4] rounded-xl border border-[#E2E8F0] border-l-4 border-l-[#1A4731] p-5 sm:p-6 mb-6 flex items-start shadow-sm">
               <FolderOpen
                 className="w-10 h-10 text-[#C8961E] mr-4 hidden sm:block shrink-0"
                 strokeWidth={1.5}
               />
-              <div className="flex-1">
+              <div>
                 <div className="text-xs font-bold text-[#1A4731] tracking-wider mb-1 flex items-center">
                   <FolderOpen
                     className="w-4 h-4 mr-1.5 sm:hidden inline"
@@ -685,20 +614,28 @@ const DocumentView = ({ docId, setCurrentPage }) => {
             </div>
 
             {/* Iframe OneDrive Container */}
-            <div className="bg-white border border-gray-200 rounded-xl overflow-hidden h-[600px] shadow-sm mt-6">
+            <div className="bg-white border border-[#E2E8F0] rounded-xl h-[600px] overflow-hidden shadow-sm flex flex-col relative group">
               {currentDoc.embedUrl ? (
                 <iframe
-                  src={getOneDriveEmbedUrl(currentDoc.embedUrl)}
+                  src={currentDoc.embedUrl}
                   width="100%"
                   height="100%"
-                  frameBorder="0"
-                  title={currentDoc.title}
-                  className="block"
+                  className="border-0 flex-grow"
+                  title={`Tautan Folder - ${currentDoc.title}`}
+                  allowFullScreen
                 />
               ) : (
-                <div className="flex h-full items-center justify-center p-6 text-center">
-                  <p className="text-gray-500">
-                    Tautan folder OneDrive belum dikonfigurasi oleh admin.
+                <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-gray-50 border-2 border-dashed border-gray-200 m-4 rounded-xl">
+                  <FolderOpen
+                    className="w-16 h-16 text-gray-300 mb-4"
+                    strokeWidth={1.5}
+                  />
+                  <h3 className="text-lg font-bold text-[#1E293B] mb-2">
+                    Tautan Belum Dikonfigurasi
+                  </h3>
+                  <p className="text-sm text-[#64748B] max-w-md">
+                    Tautan integrasi folder OneDrive untuk dokumen ini belum
+                    disematkan pada data aplikasi.
                   </p>
                 </div>
               )}
@@ -722,6 +659,9 @@ const DocumentView = ({ docId, setCurrentPage }) => {
                         : "text-[#64748B] hover:bg-gray-100 hover:text-[#1E293B]"
                     }`}
                   >
+                    <span className="w-5 text-center mr-2 opacity-60 font-bold">
+                      {doc.id}.
+                    </span>
                     <span className="truncate">{doc.title}</span>
                   </button>
                 ))}
