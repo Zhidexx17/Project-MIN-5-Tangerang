@@ -12,39 +12,40 @@ import {
   Target,
   BookOpen,
   Award,
+  ArrowLeft,
 } from "lucide-react";
 
 // --- MOCK DATA V2 (REFACTORED) ---
 const DOCUMENTS_V2 = [
   {
     id: 1,
-    title: "Usaha Pengembangan Madrasah",
+    title: "1. Usaha Pengembangan Madrasah",
     desc: "Buku kerja dan bukti fisik perencanaan, pelaksanaan, serta evaluasi program pengembangan madrasah secara berkelanjutan.",
     embedUrl:
       "https://1drv.ms/f/c/c2186077387f815b/IgAey93x5NuFR7dJCgTE5osFAXGWxVNr8AyDBgnehm-MJMs?e=sjtjKw",
   },
   {
     id: 2,
-    title: "Pelaksanaan Tugas Manajerial",
+    title: "2. Pelaksanaan Tugas Manajerial",
     desc: "Dokumen terkait manajemen standar nasional pendidikan, kelembagaan, dan pengelolaan sumber daya administrasi.",
     embedUrl:
       "https://1drv.ms/f/c/c2186077387f815b/IgAW13NePHeGT5WX17-6PAAuAem4a4juEsOamlqrzcEPG98?e=mlWV6c",
   },
   {
     id: 3,
-    title: "Pengembangan Kewirausahaan",
+    title: "3. Pengembangan Kewirausahaan",
     desc: "Inovasi, kerja keras, dan pantang menyerah dalam menciptakan peluang serta mengembangkan madrasah.",
     embedUrl: "",
   },
   {
     id: 4,
-    title: "Supervisi Guru & Tenaga Kependidikan",
+    title: "4. Supervisi Guru & Tenaga Kependidikan",
     desc: "Program, instrumen, pelaksanaan, dan tindak lanjut supervisi akademik terhadap pendidik dan tenaga kependidikan.",
     embedUrl: "",
   },
   {
     id: 5,
-    title: "Hasil Kinerja Kepala Madrasah",
+    title: "5. Hasil Kinerja Kepala Madrasah",
     desc: "Prestasi dan capaian hasil kerja dari kepala madrasah yang telah diraih selama masa tugas.",
     embedUrl: "",
   },
@@ -60,6 +61,13 @@ const colors = {
   textMain: "#1E293B",
   textSec: "#64748B",
   border: "#E2E8F0",
+};
+
+// Edit these links to point to your official social pages
+const SOCIAL_LINKS = {
+  facebook: "https://facebook.com/min5tangerang",
+  instagram: "https://instagram.com/min5tangerang",
+  youtube: "https://youtube.com/@min5tangerang",
 };
 
 const FacebookIcon = ({ className = "w-4 h-4" }) => (
@@ -257,7 +265,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
                     }}
                     className="flex items-center w-full text-left px-4 py-2.5 text-sm font-semibold text-[#1A4731] bg-green-50 hover:bg-green-100 border-b border-gray-100"
                   >
-                    Lihat Semua Kategori
+                    Lihat Semua Dokumen
                   </button>
                   {DOCUMENTS_V2.map((doc) => (
                     <button
@@ -269,9 +277,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
                       className="flex items-center w-full text-left px-4 py-2.5 text-sm text-[#1E293B] hover:bg-[#F4F6F9] hover:text-[#1A4731] group"
                     >
                       <FolderOpen className="w-4 h-4 mr-3 text-[#C8961E] group-hover:text-[#1A4731]" />
-                      <span className="truncate">
-                        Dokumen {doc.id} — {doc.title.split(" ")[0]}...
-                      </span>
+                      <span className="truncate">{doc.title}...</span>
                     </button>
                   ))}
                 </div>
@@ -381,7 +387,9 @@ const Footer = () => (
           <ul className="space-y-3 text-[#64748B] text-sm">
             <li>
               <a
-                href="#"
+                href={SOCIAL_LINKS.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center hover:text-[#1A4731] transition-colors group"
               >
                 <FacebookIcon className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
@@ -390,7 +398,9 @@ const Footer = () => (
             </li>
             <li>
               <a
-                href="#"
+                href={SOCIAL_LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center hover:text-[#1A4731] transition-colors group"
               >
                 <InstagramIcon className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
@@ -399,7 +409,9 @@ const Footer = () => (
             </li>
             <li>
               <a
-                href="#"
+                href={SOCIAL_LINKS.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center hover:text-[#1A4731] transition-colors group"
               >
                 <YoutubeIcon className="w-4 h-4 mr-2 text-[#1A4731] shrink-0" />
@@ -473,7 +485,7 @@ const HomeView = ({ setCurrentPage }) => (
         <p className="text-sm md:text-base text-green-100/80 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
           Sistem arsip digital terpadu untuk pengumpulan dan verifikasi bukti
           fisik. <br className="hidden sm:block" />
-          Tahun Pelajaran 2024/2025 • MIN 5 TANGERANG (MIN Legok)
+          Tahun Pelajaran 2025/2026 • MIN 5 TANGERANG (MIN Legok)
         </p>
 
         <div className="flex justify-center">
@@ -494,7 +506,9 @@ const HomeView = ({ setCurrentPage }) => (
 
         <div className="flex items-center space-x-6">
           <a
-            href="#"
+            href={SOCIAL_LINKS.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center hover:text-white hover:-translate-y-1 transition-all duration-300 group"
           >
             <FacebookIcon className="w-5 h-5 sm:mr-2" />
@@ -503,7 +517,9 @@ const HomeView = ({ setCurrentPage }) => (
             </span>
           </a>
           <a
-            href="#"
+            href={SOCIAL_LINKS.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center hover:text-white hover:-translate-y-1 transition-all duration-300 group"
           >
             <InstagramIcon className="w-5 h-5 sm:mr-2" />
@@ -512,7 +528,9 @@ const HomeView = ({ setCurrentPage }) => (
             </span>
           </a>
           <a
-            href="#"
+            href={SOCIAL_LINKS.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center hover:text-white hover:-translate-y-1 transition-all duration-300 group"
           >
             <YoutubeIcon className="w-5 h-5 sm:mr-2" />
@@ -540,12 +558,12 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
             Beranda
           </button>
           <span className="mx-2">/</span>
-          <span className="text-[#1E293B] font-medium">Kategori Dokumen</span>
+          <span className="text-[#1E293B] font-medium">Dokumen</span>
         </p>
         <div className="flex flex-col sm:flex-row justify-between items-baseline border-b border-gray-200 pb-5">
           <h2 className="text-3xl font-bold text-[#1E293B]">Dokumen PKKM</h2>
           <span className="text-[#64748B] text-sm font-medium mt-2 sm:mt-0 bg-gray-200 px-3 py-1 rounded-full">
-            5 Kategori Utama
+            Dokumen
           </span>
         </div>
       </div>
@@ -557,8 +575,8 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
             key={doc.id}
             className="bg-white rounded-xl p-6 shadow-[0_1px_8px_rgba(0,0,0,0.07)] border border-[#E2E8F0] hover:shadow-lg transition-all duration-300 flex flex-col h-full group hover:-translate-y-1"
           >
-            <div className="flex items-start mb-4">
-              <div className="mr-4 mt-1">
+            <div className="flex items-center mb-4">
+              <div className="mr-4">
                 <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-[#1A4731] transition-colors">
                   <FolderOpen
                     className="w-6 h-6 text-[#C8961E] group-hover:text-white transition-colors"
@@ -567,9 +585,6 @@ const DocumentsOverviewView = ({ setCurrentPage }) => (
                 </div>
               </div>
               <div className="flex-1">
-                <div className="text-xs font-bold text-[#64748B] tracking-wider mb-1">
-                  DOKUMEN {doc.id}
-                </div>
                 <h3 className="text-lg font-bold text-[#1E293B] leading-tight group-hover:text-[#1A4731] transition-colors">
                   {doc.title}
                 </h3>
@@ -612,7 +627,7 @@ const DocumentView = ({ docId, setCurrentPage }) => {
       {/* Breadcrumb Area */}
       <div className="bg-white border-b border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <p className="text-xs sm:text-sm text-[#64748B]">
+          <p className="text-base text-[#64748B] font-medium leading-none">
             <button
               onClick={() => setCurrentPage("home")}
               className="hover:text-[#1A4731] font-medium"
@@ -628,52 +643,61 @@ const DocumentView = ({ docId, setCurrentPage }) => {
             </button>
             <span className="mx-2">/</span>
             <span className="text-[#1E293B] font-medium">
-              Dokumen {currentDoc.id}
+              {currentDoc.title}
             </span>
           </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 animate-in fade-in duration-300">
         <div className="flex flex-col xl:flex-row gap-8">
           {/* Main Content Area */}
           <div className="flex-1">
+            <div className="mb-5">
+              <button
+                onClick={() => setCurrentPage("documents")}
+                className="inline-flex items-center gap-3 rounded-xl border border-[#BFD8C7] bg-[#F1FAF4] px-5 py-3 text-base font-semibold text-[#1A4731] shadow-sm hover:border-[#1A4731] hover:bg-[#E7F5EC] transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                Kembali
+              </button>
+            </div>
+
             {/* Header Card */}
-            <div className="bg-[#F0FAF4] rounded-xl border border-[#E2E8F0] border-l-4 border-l-[#1A4731] p-5 sm:p-6 mb-6 flex items-start shadow-sm">
+            <div className="bg-[#F0FAF4] rounded-xl border border-[#E2E8F0] border-l-4 border-l-[#1A4731] p-6 sm:p-7 mb-6 flex items-start shadow-sm">
               <FolderOpen
-                className="w-10 h-10 text-[#C8961E] mr-4 hidden sm:block shrink-0"
+                className="w-11 h-11 text-[#C8961E] mr-4 hidden sm:block shrink-0"
                 strokeWidth={1.5}
               />
               <div>
                 <div className="text-xs font-bold text-[#1A4731] tracking-wider mb-1 flex items-center">
                   <FolderOpen
-                    className="w-4 h-4 mr-1.5 sm:hidden inline"
+                    className="w-5 h-5 mr-1.5 sm:hidden inline"
                     strokeWidth={2}
                   />
-                  DOKUMEN {currentDoc.id}
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-[#1E293B] mb-2 leading-tight">
+                <h1 className="text-3xl sm:text-4xl font-bold text-[#1E293B] mb-2 leading-tight">
                   {currentDoc.title}
                 </h1>
-                <p className="text-sm text-[#64748B] font-medium leading-relaxed">
+                <p className="text-base sm:text-lg text-[#64748B] font-medium leading-relaxed">
                   {currentDoc.desc}
                 </p>
               </div>
             </div>
 
             {/* Dokument Info Card */}
-            <div className="bg-white border border-[#E2E8F0] rounded-2xl shadow-[0_10px_30px_rgba(15,23,42,0.06)] p-6 sm:p-10 min-h-[420px] flex items-center justify-center">
-              <div className="max-w-2xl w-full text-center rounded-2xl border border-dashed border-[#E2E8F0] bg-[#F9FBFD] px-6 py-10 sm:px-10 sm:py-14">
-                <div className="flex items-center justify-center w-20 h-20 mx-auto rounded-full bg-[#FFF7E6] mb-5">
+            <div className="bg-white border border-[#E2E8F0] rounded-2xl shadow-[0_10px_30px_rgba(15,23,42,0.06)] p-7 sm:p-12 min-h-[440px] flex items-center justify-center">
+              <div className="max-w-3xl w-full text-center rounded-2xl border border-dashed border-[#E2E8F0] bg-[#F9FBFD] px-6 py-11 sm:px-12 sm:py-16">
+                <div className="flex items-center justify-center w-24 h-24 mx-auto rounded-full bg-[#FFF7E6] mb-5">
                   <FolderOpen
-                    className="w-10 h-10 text-[#C8961E]"
+                    className="w-12 h-12 text-[#C8961E]"
                     strokeWidth={1.8}
                   />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-[#1E293B] mb-3 leading-tight">
+                <h3 className="text-2xl sm:text-3xl font-bold text-[#1E293B] mb-3 leading-tight">
                   Dokumen tersedia di Cloud Penyimpanan OneDrive Resmi.
                 </h3>
-                <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-xl mx-auto">
+                <p className="text-base sm:text-lg text-[#64748B] leading-relaxed max-w-xl mx-auto">
                   Silakan klik tombol di bawah untuk memeriksa, membaca, dan
                   mengunduh seluruh bukti fisik secara transparan.
                 </p>
@@ -681,9 +705,9 @@ const DocumentView = ({ docId, setCurrentPage }) => {
                 <button
                   onClick={handleOpenDocument}
                   disabled={!hasDocumentLink}
-                  className={`mt-6 inline-flex items-center gap-2 mx-auto ${hasDocumentLink ? "bg-[#1A4731] hover:bg-[#1E6B45] text-white font-bold px-8 py-4 rounded-xl shadow-lg transition-all" : "bg-gray-300 text-gray-600 font-bold px-8 py-4 rounded-xl cursor-not-allowed"}`}
+                  className={`mt-6 inline-flex items-center gap-2 mx-auto ${hasDocumentLink ? "bg-[#1A4731] hover:bg-[#1E6B45] text-white font-bold px-9 py-5 rounded-xl shadow-lg transition-all" : "bg-gray-300 text-gray-600 font-bold px-9 py-5 rounded-xl cursor-not-allowed"}`}
                 >
-                  <FolderOpen className="w-5 h-5" />
+                  <FolderOpen className="w-6 h-6" />
                   {hasDocumentLink
                     ? "Buka Dokumen di Tab Baru"
                     : "Tautan dokumen belum dikonfigurasi"}
@@ -693,7 +717,7 @@ const DocumentView = ({ docId, setCurrentPage }) => {
           </div>
 
           {/* Desktop Sidebar Navigation */}
-          <div className="hidden xl:block w-72 flex-shrink-0">
+          <div className="hidden xl:block w-80 flex-shrink-0">
             <div className="bg-white rounded-xl shadow-[0_1px_8px_rgba(0,0,0,0.07)] border border-[#E2E8F0] p-5 sticky top-24">
               <h3 className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-4 pb-3 border-b border-gray-100">
                 Navigasi Cepat
@@ -709,9 +733,6 @@ const DocumentView = ({ docId, setCurrentPage }) => {
                         : "text-[#64748B] hover:bg-gray-100 hover:text-[#1E293B]"
                     }`}
                   >
-                    <span className="w-5 text-center mr-2 opacity-60 font-bold">
-                      {doc.id}.
-                    </span>
                     <span className="truncate">{doc.title}</span>
                   </button>
                 ))}
