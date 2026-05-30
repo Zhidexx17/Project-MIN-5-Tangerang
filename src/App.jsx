@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logoImage from "./assets/Logo.png";
 import {
   FolderOpen,
   Menu,
@@ -118,86 +119,20 @@ const KemenagLogo = ({
   showText = true,
   minimal = false,
 }) => {
-  const svgContent = (
-    <svg viewBox="0 0 100 100" className={className}>
-      {/* Pentagon Luar */}
-      <polygon
-        points="50,3 95,36 78,88 22,88 5,36"
-        fill="#1A4731"
-        stroke="#C8961E"
-        strokeWidth="3"
-      />
-      {/* Pentagon Dalam */}
-      <polygon
-        points="50,8 90,38 75,83 25,83 10,38"
-        fill="#1E6B45"
-        stroke="#C8961E"
-        strokeWidth="1"
-      />
-      {/* Bintang */}
-      <polygon
-        points="50,15 53,23 62,23 55,28 57,36 50,31 43,36 45,28 38,23 47,23"
-        fill="#FFD700"
-      />
-      {/* Kapas */}
-      <path
-        d="M 28,60 C 24,52 28,40 36,32"
-        fill="none"
-        stroke="#FFFFFF"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeDasharray="1 4"
-      />
-      {/* Padi */}
-      <path
-        d="M 72,60 C 76,52 72,40 64,32"
-        fill="none"
-        stroke="#C8961E"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-      {/* Al-Qur'an Terbuka */}
-      <path
-        d="M 36,54 C 42,48 48,54 50,56 C 52,54 58,48 64,54 L 64,44 C 58,38 52,44 50,46 C 48,44 42,38 36,44 Z"
-        fill="#FFFBEB"
-        stroke="#C8961E"
-        strokeWidth="1"
-      />
-      <path d="M 50,46 L 50,56" stroke="#C8961E" strokeWidth="1" />
-      {/* Rehal */}
-      <path
-        d="M 42,56 L 58,66 M 58,56 L 42,66"
-        stroke="#FFFFFF"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-      {/* Pita */}
-      <path
-        d="M 20,73 Q 50,81 80,73 L 75,80 Q 50,87 25,80 Z"
-        fill="#FFFFFF"
-        stroke="#C8961E"
-        strokeWidth="1"
-      />
-      <text
-        x="50"
-        y="78.5"
-        fontSize="4.2"
-        fontWeight="bold"
-        fill="#1A4731"
-        textAnchor="middle"
-        letterSpacing="0.2"
-      >
-        IKHLAS BERAMAL
-      </text>
-    </svg>
+  const logoElement = (
+    <img
+      src={logoImage}
+      alt="Logo MIN 5 Tangerang"
+      className={`${className} object-contain`}
+    />
   );
 
-  if (minimal) return svgContent;
+  if (minimal) return logoElement;
 
   return (
     <div className="flex flex-col items-center justify-center group cursor-pointer">
       <div className="relative p-2 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20 shadow-xl transition-all duration-300 group-hover:bg-white/15 group-hover:scale-105">
-        {svgContent}
+        {logoElement}
       </div>
       {showText && (
         <div className="text-center mt-3">
@@ -328,7 +263,7 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
               }}
               className="block w-full text-left font-semibold text-[#1A4731] py-1.5"
             >
-              Semua Kategori Dokumen
+              Semua Dokumen
             </button>
             {DOCUMENTS_V2.map((doc) => (
               <button
@@ -339,8 +274,8 @@ const Navbar = ({ currentPage, setCurrentPage }) => {
                 }}
                 className="flex items-center w-full text-left text-sm text-[#1E293B] py-1.5"
               >
-                <FolderOpen className="w-4 h-4 mr-2 text-[#C8961E]" /> Dokumen{" "}
-                {doc.id}
+                <FolderOpen className="w-4 h-4 mr-2 text-[#C8961E]" />
+                {doc.title}
               </button>
             ))}
           </div>
@@ -473,7 +408,7 @@ const HomeView = ({ setCurrentPage }) => (
 
       <div className="max-w-4xl mx-auto text-center relative z-10 w-full flex-grow flex flex-col justify-center py-10">
         <div className="flex justify-center mb-8">
-          <KemenagLogo className="w-28 h-28" />
+          <KemenagLogo className="w-35 h-35" />
         </div>
 
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight drop-shadow-md">
@@ -501,7 +436,7 @@ const HomeView = ({ setCurrentPage }) => (
       {/* Social Media & Info Bar */}
       <div className="relative z-10 w-full max-w-7xl mx-auto mt-auto pt-6 pb-2 border-t border-white/20 flex flex-col sm:flex-row justify-between items-center text-sm text-green-100/80">
         <p className="mb-4 sm:mb-0 font-medium tracking-wide">
-          © 2025 MIN 5 TANGERANG
+          © 2026 MIN 5 TANGERANG
         </p>
 
         <div className="flex items-center space-x-6">
